@@ -9,12 +9,43 @@
 <h1 align="center">
 	李小蒙
 </h1>
- <form action="http://www.baidu.com/s">
-        <input type="text" 
-        placeholder="请输入关键字"
-        name="wd" >
-        <input type="submit" value="百度搜索">
-    </form>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+<script language="javascript">
+function g(formname) {
+    var url = "http://www.baidu.com/baidu";
+    var   myid   =   document.getElementById("tryselect")
+    var myidvalue=myid.options[myid.selectedIndex].value;
+    if (myidvalue==2) {
+        formname.ct.value = "2097152";
+    }
+    else {
+        formname.ct.value = "0";
+    }
+    formname.action = url;
+    return true;
+}
+</script>
+<form name="f1" onsubmit="return g(this)">
+<table border="1" bgcolor="#FFFFFF" style="font-size:9pt;">
+    <tr height="60"><td valign="top"><img src="http://img.baidu.com/img/logo-137px.gif" border="0" alt="baidu"></td>
+        <td>
+            <input name=word size="20" maxlength="100" />
+            <input name=tn type=hidden value="bds" />
+            <input name=cl type=hidden value="3" />
+            <input name=ct type=hidden />
+            <input name=si type=hidden value="bbs.baidu.com" />
+                                   
+                                   
+            <select name="s" id="tryselect">
+                <option value="1">网页搜索</option>
+                <option value="2">站内搜索</option>
+            </select>
+                                   
+            <input type="submit" value="搜索" style="background: none repeat scroll 0 0 #F5F5F0;border-color: #E2E2E2 #C1C1C1 #C1C1C1 #E2E2E2;" />
+        </td>
+    </tr>
+</table>
+</form>
 
 
 
