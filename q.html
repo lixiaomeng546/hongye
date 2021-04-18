@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>求最小公倍数和最大公因数—小蒙制作</title>
+</head>
+<a href="https://lixiaomeng546.github.io/hongye/">小蒙hongye</a>»»<a href="#">求最小公因数和最大公倍数</a>  
+<body>
+<p>小蒙制作</p>
+    <script>
+        function max_gy(a,b){
+            while (true){
+                var yu=a%b;
+                if (yu==0){
+                    return b;
+                }
+                a=b;
+                b=yu;
+            }
+        }
+        function min_gb(a,b){
+            return a*b/max_gy(a,b);
+        }
+        
+        var a=Number(prompt("请输入第一个值："));
+        var b=Number(prompt("请输入第二个值："));
+        document.write(a+"和"+b+"的最大公约数为："+max_gy(a,b));
+        document.write("<br>");
+        document.write(a+"和"+b+"的最小公倍数为："+min_gb(a,b));
+    </script>
+</body>
+
+</html>
