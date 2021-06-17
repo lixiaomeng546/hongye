@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欧小蒙聊天•oxm</title>
+</head>
+<style>
+
+
+    #set_name{
+        margin: auto;
+        text-align: center;
+    }
+</style>
+<body>
+<h5 style="text-align: center">oxm..欧小蒙聊天</h5>
+<div id="set_name">
+昵称:<input name="name" id="name"><input type="button" onclick="set_name();" value="进入群聊">
+</div>
+<div id="chat" style="width: 600px; border: red 1px solid;margin: auto;display: none">
+    <div id="sayContent" style="height: 300px;border-bottom: silver 1px dashed;">
+
+    </div>
+    <div style="height: 75px;margin-top: 10px">
+        <textarea id="content" style="height: 50px;width: 480px;background-color: #00a0e9;float: left;"></textarea>
+        <button id="submit" style="float: right;height: 55px;width:50px;margin-right:45px;display: block;" onclick="send_msg();">发送</button>
+    </div>
+</div>
+<script>
+    var name = ws = '' ;
+    //执行websock
+    function chat() {
+        var wsserver = 'ws://47.94.11.195:443';
+        //调用WebSocket对象建立连接
+        //ws  wss: // ip:port(字符串)
+        ws = new WebSocket(wsserver);
+        //获取聊天内容展示窗口
+        var sayContent = document.getElementById('sayContent');
+        //onopen监听连接打开
+        ws.onopen = function (v) {
+            var user = new Object();
+            user.name = name;
+            user.type = 1;//对用户设置姓名
+            var json = JSON.stringify(user);
+            ws.send(json);//发送数据
+        }
+        //onmessage监听服务器数据推送
+        ws.onmessage = function (v) {
+            var html = sayContent.innerHTML;
+            sayContent.innerHTML = html + "<br>"+v.data;
+        }
+        //监听连接关闭
+        ws.onclose = function (v) {
+            var html = sayContent.innerHTML;
+            sayContent.innerHTML = html + "<br>聊天室已关闭!";
+        }
+    }
+    //设置用户名
+    function set_name() {
+        name = document.getElementById('name').value;
+        if(name == ''){
+            alert('请输入用户名!');
+            return false;
+        }
+        document.getElementById('set_name').style.display='none';
+        document.getElementById('chat').style.display='block';
+        chat();
+    }
+    function send_msg() {
+        var content = document.getElementById('content');
+        if(content.value == ''){
+            alert('请输入聊天内容!');
+            return false;
+        }
+
+        var msg = new Object();
+        msg.content = content.value;
+        msg.type = 2;
+        var str = JSON.stringify(msg);
+        ws.send(str);
+    }
+</script>
+</body>
+</html>
